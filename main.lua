@@ -2,12 +2,15 @@ push = require 'libs/push'
 Class = require 'libs/class'
 
 require 'classes/Player'
+require 'classes/Bismarck'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
+
+PLAYER_SPEED_Y = 200
 
 local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
@@ -17,18 +20,27 @@ local groundScroll = 0
 local GROUND_SCROLL_SPEED = 100
 local GROUND_LOOPING_POINT = 900
 
+
+
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
--- local playerGraphic = love.graphics.newImage('graphics/swordfish.png')
-local bismarckGraphic = love.graphics.newImage('graphics/bismarck.png')
 
 function love.update(dt)
-    -- scroll background by preset speed * dt, looping back to 0 after the looping point
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
 
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
         % GROUND_LOOPING_POINT
+    
+    if love.keyboard.isDown('up') then
+        player1.dy = -PLAYER_SPEED_Y
+    elseif love.keyboard.isDown('down') then
+        player1.dy = PLAYER_SPEED_Y
+    else
+        player1.dy = 0
+    end
+
+    player1:update(dt)
 end
 
 function love.load()
@@ -37,6 +49,7 @@ function love.load()
 
     titleFont = love.graphics.newFont('font.ttf', 64)
     playFont = love.graphics.newFont('font.ttf', 32)
+    smallFont = love.graphics.newFont('font.ttf', 16)
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
@@ -45,6 +58,7 @@ function love.load()
     })
 
     player1 = Player(50, 100)
+    bismarck1 = Bismarck(100, VIRTUAL_HEIGHT - 375)
 
     gameState = 'start'
 end
@@ -82,9 +96,18 @@ function love.draw()
         love.graphics.printf('Press enter to start', 0, VIRTUAL_HEIGHT / 2 - 16, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         player1:render()
-        love.graphics.draw(bismarckGraphic, 100, VIRTUAL_HEIGHT - 375)
+        bismarck1:render()
     end
+
+    displayFPS()
 
     -- end rendering at virtual resolution
     push:apply('end')
+end
+
+function displayFPS()
+    -- simple FPS display across all states
+    love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end
