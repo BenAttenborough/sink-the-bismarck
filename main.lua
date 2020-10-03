@@ -11,6 +11,7 @@ VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
 
 PLAYER_SPEED_Y = 200
+PLAYER_SPEED_X = 150
 
 local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
@@ -38,6 +39,14 @@ function love.update(dt)
         player1.dy = PLAYER_SPEED_Y
     else
         player1.dy = 0
+    end
+
+    if love.keyboard.isDown('left') then
+        player1.dx = -PLAYER_SPEED_X
+    elseif love.keyboard.isDown('right') then
+        player1.dx = PLAYER_SPEED_X
+    else
+        player1.dx = 0
     end
 
     player1:update(dt)
@@ -82,7 +91,7 @@ function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
 
-    -- love.graphics.clear(184, 225, 245, 255)
+    love.graphics.clear(184, 225, 245, 255)
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
 

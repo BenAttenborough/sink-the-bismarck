@@ -8,6 +8,7 @@ function Player:init(x,y)
     self.dx = 0
     self.graphic = graphic
     self.height = graphic:getHeight()
+    self.width = graphic:getWidth()
 end
 
 function Player:update(dt)
@@ -23,6 +24,16 @@ function Player:update(dt)
     -- based on its top left corner)
     else
         self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
+    end
+
+    if self.dx < 0 then
+        self.x = math.max(0, self.x + self.dx * dt)
+    -- similar to before, this time we use math.min to ensure we don't
+    -- go any farther than the bottom of the screen minus the paddle's
+    -- height (or else it will go partially below, since position is
+    -- based on its top left corner)
+    else
+        self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
 end
 
