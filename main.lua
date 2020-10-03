@@ -1,4 +1,7 @@
-push = require 'push'
+push = require 'libs/push'
+Class = require 'libs/class'
+
+require 'classes/Player'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -16,7 +19,7 @@ local GROUND_LOOPING_POINT = 900
 
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
-local playerGraphic = love.graphics.newImage('graphics/swordfish.png')
+-- local playerGraphic = love.graphics.newImage('graphics/swordfish.png')
 local bismarckGraphic = love.graphics.newImage('graphics/bismarck.png')
 
 function love.update(dt)
@@ -40,6 +43,8 @@ function love.load()
         resizable = true,
         vsync = true
     })
+
+    player1 = Player(50, 100)
 
     gameState = 'start'
 end
@@ -66,8 +71,7 @@ function love.draw()
     -- love.graphics.clear(184, 225, 245, 255)
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
-    -- love.graphics.draw(playerGraphic, 50, 100)
-    -- love.graphics.draw(bismarckGraphic, 100, VIRTUAL_HEIGHT - 375)
+
 
     if gameState == 'start' then
         love.graphics.setFont(titleFont)
@@ -77,7 +81,7 @@ function love.draw()
         love.graphics.setColor(255, 255, 255)
         love.graphics.printf('Press enter to start', 0, VIRTUAL_HEIGHT / 2 - 16, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
-        love.graphics.draw(playerGraphic, 50, 100)
+        player1:render()
         love.graphics.draw(bismarckGraphic, 100, VIRTUAL_HEIGHT - 375)
     end
 
