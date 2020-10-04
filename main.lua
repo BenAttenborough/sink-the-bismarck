@@ -3,6 +3,7 @@ Class = require 'libs/class'
 
 require 'classes/Player'
 require 'classes/Bismarck'
+require 'classes/Arado'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -68,6 +69,7 @@ function love.load()
 
     player1 = Player(50, 100)
     bismarck1 = Bismarck(100, VIRTUAL_HEIGHT - 375)
+    arado1 = Arado(VIRTUAL_WIDTH - 200, 100)
 
     gameState = 'start'
 end
@@ -91,21 +93,22 @@ function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
 
-    love.graphics.clear(184, 225, 245, 255)
+    love.graphics.clear(184/255, 225/255, 245/255, 255/255)
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
 
 
     if gameState == 'start' then
         love.graphics.setFont(titleFont)
-        love.graphics.setColor(204, 33, 75)
+        love.graphics.setColor(204/255, 33/255, 75/255)
         love.graphics.printf('SINK THE BISMARCK!', 0, 40, VIRTUAL_WIDTH, 'center')
         love.graphics.setFont(playFont)
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(255/255, 255/255, 255/255)
         love.graphics.printf('Press enter to start', 0, VIRTUAL_HEIGHT / 2 - 16, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         player1:render()
         bismarck1:render()
+        arado1:render()
     end
 
     displayFPS()
