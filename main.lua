@@ -22,8 +22,6 @@ local groundScroll = 0
 local GROUND_SCROLL_SPEED = 100
 local GROUND_LOOPING_POINT = 900
 
-
-
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
 
@@ -51,6 +49,9 @@ function love.update(dt)
     end
 
     player1:update(dt)
+    if gameState == 'start' then
+        bismarck1:updateIntro(dt)
+    end
 end
 
 function love.load()
@@ -68,7 +69,7 @@ function love.load()
     })
 
     player1 = Player(50, 100)
-    bismarck1 = Bismarck(100, VIRTUAL_HEIGHT - 375)
+    bismarck1 = Bismarck(1100, VIRTUAL_HEIGHT - 375)
     arado1 = Arado(VIRTUAL_WIDTH - 200, 100)
 
     gameState = 'start'
@@ -104,10 +105,11 @@ function love.draw()
         love.graphics.printf('SINK THE BISMARCK!', 0, 40, VIRTUAL_WIDTH, 'center')
         love.graphics.setFont(playFont)
         love.graphics.setColor(255/255, 255/255, 255/255)
-        love.graphics.printf('Press enter to start', 0, VIRTUAL_HEIGHT / 2 - 16, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press enter to start', 0, VIRTUAL_HEIGHT / 2 - 150, VIRTUAL_WIDTH, 'center')
+        bismarck1:render()
     elseif gameState == 'play' then
         player1:render()
-        bismarck1:render()
+        -- bismarck1:render()
         arado1:render()
     end
 

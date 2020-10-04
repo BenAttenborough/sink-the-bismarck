@@ -1,14 +1,13 @@
 Player = Class{}
 
 function Player:init(x,y)
-    local graphic = love.graphics.newImage('graphics/swordfish.png')
     self.x = x
     self.y = y
     self.dy = 0
     self.dx = 0
-    self.graphic = graphic
-    self.height = graphic:getHeight()
-    self.width = graphic:getWidth()
+    self.graphic = love.graphics.newImage('graphics/swordfish.png')
+    self.height = self.graphic:getHeight()
+    self.width = self.graphic:getWidth()
 end
 
 function Player:update(dt)
