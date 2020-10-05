@@ -48,7 +48,11 @@ function love.update(dt)
         player1.dx = 0
     end
 
-    player1:update(dt)
+    if gameState == 'play' then
+        player1:update(dt)
+        arado1:update(dt)
+    end
+    
     if gameState == 'start' then
         bismarck1:updateIntro(dt)
     end
@@ -69,8 +73,8 @@ function love.load()
     })
 
     player1 = Player(50, 100)
-    bismarck1 = Bismarck(1100, VIRTUAL_HEIGHT - 375)
-    arado1 = Arado(VIRTUAL_WIDTH - 200, 100)
+    bismarck1 = Bismarck(1050, VIRTUAL_HEIGHT - 375)
+    arado1 = Arado(VIRTUAL_WIDTH + 50, 100)
 
     gameState = 'start'
 end
