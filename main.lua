@@ -52,7 +52,9 @@ function love.update(dt)
     if gameState == 'play' then
         player1:update(dt)
         arado1:update(dt)
-        bullet:update(dt)
+        if bullet then
+            bullet:update(dt)
+        end
     end
     
     if gameState == 'start' then
@@ -78,8 +80,6 @@ function love.load()
     bismarck1 = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     arado1 = Arado(VIRTUAL_WIDTH + 50, 100)
 
-    bullet = Bullet(50, 100)
-
     gameState = 'start'
 end
 
@@ -92,8 +92,16 @@ function love.keypressed(key)
         love.event.quit()
     end
     if gameState == 'start' then
-        if key == 'enter' or key == 'return' then
+        if key == 'enter' or key == 'return' or key == 'space' then
+            print('Game started')
             gameState = 'play'
+        end
+    end
+    if gameState == 'play' then
+        if key == 'space' then
+            bullet = Bullet(player1.x + player1.width - 30, player1.y + 15)
+            print('Shooting')
+            print(player1.x)
         end
     end
 end
@@ -119,7 +127,9 @@ function love.draw()
         player1:render()
         -- bismarck1:render()
         arado1:render()
-        bullet:render()
+        if bullet then
+            bullet:render()
+        end
     end
 
     displayFPS()

@@ -4,12 +4,12 @@ function Bullet:init(x,y)
     self.x = x
     self.y = y
     self.dx = 0
-    self.speed = 1
+    self.speed = 5
 end
 
 function Bullet:update(dt)
     self.dx = self.dx + self.speed * dt
-    self.x = self.x + self.dx
+    self.x = self.x + self.speed
 end
 
 function Bullet:render()
