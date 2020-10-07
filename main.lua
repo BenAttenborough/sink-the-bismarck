@@ -4,6 +4,7 @@ Class = require 'libs/class'
 require 'classes/Player'
 require 'classes/Bismarck'
 require 'classes/Arado'
+require 'classes/Bullet'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -51,6 +52,7 @@ function love.update(dt)
     if gameState == 'play' then
         player1:update(dt)
         arado1:update(dt)
+        bullet:update(dt)
     end
     
     if gameState == 'start' then
@@ -75,6 +77,8 @@ function love.load()
     player1 = Player(50, 100)
     bismarck1 = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     arado1 = Arado(VIRTUAL_WIDTH + 50, 100)
+
+    bullet = Bullet(50, 100)
 
     gameState = 'start'
 end
@@ -115,6 +119,7 @@ function love.draw()
         player1:render()
         -- bismarck1:render()
         arado1:render()
+        bullet:render()
     end
 
     displayFPS()
