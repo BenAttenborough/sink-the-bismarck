@@ -12,9 +12,6 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
 
-PLAYER_SPEED_Y = 200
-PLAYER_SPEED_X = 150
-
 local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
 local BACKGROUND_LOOPING_POINT = 1024
@@ -32,22 +29,6 @@ function love.update(dt)
 
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
         % GROUND_LOOPING_POINT
-    
-    if love.keyboard.isDown('up') then
-        player1.dy = -PLAYER_SPEED_Y
-    elseif love.keyboard.isDown('down') then
-        player1.dy = PLAYER_SPEED_Y
-    else
-        player1.dy = 0
-    end
-
-    if love.keyboard.isDown('left') then
-        player1.dx = -PLAYER_SPEED_X
-    elseif love.keyboard.isDown('right') then
-        player1.dx = PLAYER_SPEED_X
-    else
-        player1.dx = 0
-    end
 
     if gameState == 'play' then
         player1:update(dt)
@@ -60,6 +41,7 @@ function love.update(dt)
     if gameState == 'start' then
         bismarck1:updateIntro(dt)
     end
+    love.keyboard.keysPressed = {}
 end
 
 function love.load()
@@ -81,13 +63,18 @@ function love.load()
     arado1 = Arado(VIRTUAL_WIDTH + 50, 100)
 
     gameState = 'start'
+
+    love.keyboard.keysPressed = {}
+    love.keyboard.keysHeld = {}
 end
 
 function love.resize(w, h)
     push:resize(w, h)
-end
+end 
 
-function love.keypressed(key)
+function love.keypressed(key, scancode, isrepeat)
+    love.keyboard.keysPressed[key] = true
+    love.keyboard.keysHeld[key] = true
     if key == 'escape' then
         love.event.quit()
     end
@@ -104,6 +91,20 @@ function love.keypressed(key)
             print(player1.x)
         end
     end
+end
+
+function love.keyreleased(key)
+    print(key .. ' released')
+    love.keyboard.keysHeld[key] = false
+    print(love.keyboard.keysHeld[key])
+end
+
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
+end
+
+function love.keyboard.wasHeld(key)
+    return love.keyboard.keysHeld[key]
 end
 
 function love.draw()
