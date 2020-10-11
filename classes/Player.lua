@@ -1,4 +1,8 @@
+require 'classes/Bullet'
+
 Player = Class{}
+
+local bullets = {}
 
 function Player:init(x,y)
     self.x = x
@@ -29,6 +33,11 @@ function Player:update(dt)
     elseif love.keyboard.wasHeld('right') then
         self.dx = self.speedX
     end
+
+    if love.keyboard.wasHeld('space') then
+        print('Shooting')
+        table.insert(bullets, Bullet(self.x + self.width - 30, self.y + 15))
+    end
     
     -- If velocity move sprite, clamping it to the screen dimensions
     if self.dy < 0 then
@@ -42,8 +51,29 @@ function Player:update(dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
+
+    for key, bullet in pairs(bullets) do
+        bullet:update(dt)
+
+        if bullet.x > VIRTUAL_WIDTH then
+            table.remove(bullets, key)
+        end
+    end
+end
+
+function Player:collides(obstacle)
+    if (self.x + 2) + (self.width - 4) >= obstacle.x and self.x + 2 <= obstacle.x + obstacle.width then
+        if (self.y + 2) + (self.height - 4) >= obstacle.y and self.y + 2 <= obstacle.y + obstacle.height then
+            return true
+        end
+    end
+
+    return false
 end
 
 function Player:render()
     love.graphics.draw(self.graphic, self.x, self.y)
+    for key, bullet in pairs(bullets) do
+        bullet:render()
+    end
 end

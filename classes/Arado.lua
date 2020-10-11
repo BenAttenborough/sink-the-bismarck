@@ -8,11 +8,18 @@ function Arado:init(y)
     self.dx = 0
     self.speed = 1
     self.width = ARADO_GRAPHIC:getWidth()
+    self.height = ARADO_GRAPHIC:getHeight()
+    self.remove = false
 end
 
 function Arado:update(dt)
-    self.dx = self.dx - self.speed * dt
-    self.x = self.x + self.dx
+    if self.x < -self.width then
+        self.remove = true
+    else
+        self.dx = self.dx - self.speed * dt
+        self.x = self.x + self.dx
+    end
+    
 end
 
 function Arado:render()

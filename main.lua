@@ -4,7 +4,7 @@ Class = require 'libs/class'
 require 'classes/Player'
 require 'classes/Bismarck'
 require 'classes/Arado'
-require 'classes/Bullet'
+-- require 'classes/Bullet'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -29,6 +29,8 @@ local sea = love.graphics.newImage('graphics/sea.png')
 local arados = {}
 local lastAradoY = 0
 
+local isScrolling = true
+
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
@@ -37,34 +39,35 @@ function love.update(dt)
         % GROUND_LOOPING_POINT
 
     if gameState == 'play' then
-
-        if spawnTimer > 2 then
-            table.insert(arados, Arado(lastAradoY))
-            spawnTimer = 0
-            lastAradoY = lastAradoY - 150 + math.random(300)        
-            
-            if lastAradoY < 0 then
-                lastAradoY = math.random(300)
-            elseif lastAradoY > VIRTUAL_PLAYAREA_HEIGHT then
-                lastAradoY = math.random(VIRTUAL_PLAYAREA_HEIGHT - 300, VIRTUAL_PLAYAREA_HEIGHT)
+        if isScrolling then
+            if spawnTimer > 2 then
+                table.insert(arados, Arado(lastAradoY))
+                spawnTimer = 0
+                lastAradoY = lastAradoY - 150 + math.random(300)        
+                
+                if lastAradoY < 0 then
+                    lastAradoY = math.random(300)
+                elseif lastAradoY > VIRTUAL_PLAYAREA_HEIGHT then
+                    lastAradoY = math.random(VIRTUAL_PLAYAREA_HEIGHT - 300, VIRTUAL_PLAYAREA_HEIGHT)
+                end
             end
-        end
+    
+            for key, arado in pairs(arados) do
+                arado:update(dt)
+    
+                if arado.x < -arado.width then
+                    table.remove(arados, key)
+                end
 
-        for key, arado in pairs(arados) do
-            arado:update(dt)
-
-            if arado.x < -arado.width then
-                table.remove(arados, key)
+                if player1:collides(arado) then
+                    isScrolling = false
+                end
             end
+    
+            player1:update(dt)
+    
+            spawnTimer = spawnTimer + dt        
         end
-
-        player1:update(dt)
-        
-        if bullet then
-            bullet:update(dt)
-        end
-        
-        spawnTimer = spawnTimer + dt        
     end
     
     if gameState == 'start' then
@@ -113,13 +116,13 @@ function love.keypressed(key)
             gameState = 'play'
         end
     end
-    if gameState == 'play' then
-        if key == 'space' then
-            bullet = Bullet(player1.x + player1.width - 30, player1.y + 15)
-            print('Shooting')
-            print(player1.x)
-        end
-    end
+    -- if gameState == 'play' then
+    --     if key == 'space' then
+    --         bullet = Bullet(player1.x + player1.width - 30, player1.y + 15)
+    --         print('Shooting')
+    --         print(player1.x)
+    --     end
+    -- end
 end
 
 function love.keyreleased(key)
@@ -157,9 +160,9 @@ function love.draw()
             arado:render()
         end
 
-        if bullet then
-            bullet:render()
-        end
+        -- if bullet then
+        --     bullet:render()
+        -- end
     end
 
     displayFPS()

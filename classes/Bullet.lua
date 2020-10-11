@@ -15,4 +15,5 @@ end
 function Bullet:render()
     love.graphics.setColor( 150/255, 0, 0, 1 )
     love.graphics.rectangle( 'fill', self.x, self.y, 2, 2 )
+    love.graphics.setColor(255, 255, 255)
 end
