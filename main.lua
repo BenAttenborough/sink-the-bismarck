@@ -26,6 +26,8 @@ local GROUND_LOOPING_POINT = 900
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
 
+bullets = {}
+
 local arados = {}
 local lastAradoY = 0
 
@@ -55,16 +57,38 @@ function love.update(dt)
             for key, arado in pairs(arados) do
                 arado:update(dt)
     
-                if arado.x < -arado.width then
-                    table.remove(arados, key)
-                end
-
                 if player1:collides(arado) then
                     isScrolling = false
                 end
             end
+
+            for key, arado in pairs(arados) do
+                if arado.remove then
+                    table.remove(arados, key)
+                end
+            end
     
             player1:update(dt)
+
+            for key, bullet in pairs(bullets) do
+                bullet:update(dt)
+        
+                
+                for key, arado in pairs(arados) do
+                    if bullet:collides(arado) then
+                        bullet.remove = true
+                        arado.remove = true
+                        -- isScrolling = false
+                    end
+                end
+               
+            end
+
+            for key, bullet in pairs(bullets) do
+                if bullet.remove then
+                    table.remove(bullets, key)
+                end
+            end
     
             spawnTimer = spawnTimer + dt        
         end
@@ -116,13 +140,6 @@ function love.keypressed(key)
             gameState = 'play'
         end
     end
-    -- if gameState == 'play' then
-    --     if key == 'space' then
-    --         bullet = Bullet(player1.x + player1.width - 30, player1.y + 15)
-    --         print('Shooting')
-    --         print(player1.x)
-    --     end
-    -- end
 end
 
 function love.keyreleased(key)
@@ -163,6 +180,10 @@ function love.draw()
         -- if bullet then
         --     bullet:render()
         -- end
+    end
+
+    for key, bullet in pairs(bullets) do
+        bullet:render()
     end
 
     displayFPS()

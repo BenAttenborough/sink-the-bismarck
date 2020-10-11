@@ -19,7 +19,6 @@ function Arado:update(dt)
         self.dx = self.dx - self.speed * dt
         self.x = self.x + self.dx
     end
-    
 end
 
 function Arado:render()

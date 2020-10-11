@@ -2,8 +2,6 @@ require 'classes/Bullet'
 
 Player = Class{}
 
-local bullets = {}
-
 function Player:init(x,y)
     self.x = x
     self.y = y
@@ -35,7 +33,6 @@ function Player:update(dt)
     end
 
     if love.keyboard.wasHeld('space') then
-        print('Shooting')
         table.insert(bullets, Bullet(self.x + self.width - 30, self.y + 15))
     end
     
@@ -51,14 +48,6 @@ function Player:update(dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
-
-    for key, bullet in pairs(bullets) do
-        bullet:update(dt)
-
-        if bullet.x > VIRTUAL_WIDTH then
-            table.remove(bullets, key)
-        end
-    end
 end
 
 function Player:collides(obstacle)
@@ -73,7 +62,4 @@ end
 
 function Player:render()
     love.graphics.draw(self.graphic, self.x, self.y)
-    for key, bullet in pairs(bullets) do
-        bullet:render()
-    end
 end
