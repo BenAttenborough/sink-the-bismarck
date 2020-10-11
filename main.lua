@@ -72,7 +72,7 @@ function love.resize(w, h)
     push:resize(w, h)
 end 
 
-function love.keypressed(key, scancode, isrepeat)
+function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
     love.keyboard.keysHeld[key] = true
     if key == 'escape' then
@@ -94,9 +94,7 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.keyreleased(key)
-    print(key .. ' released')
     love.keyboard.keysHeld[key] = false
-    print(love.keyboard.keysHeld[key])
 end
 
 function love.keyboard.wasPressed(key)
