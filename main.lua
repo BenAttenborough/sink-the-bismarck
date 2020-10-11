@@ -11,6 +11,7 @@ WINDOW_HEIGHT = 720
 
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
+VIRTUAL_PLAYAREA_HEIGHT = VIRTUAL_HEIGHT - 100
 
 local spawnTimer = 0;
 
@@ -26,6 +27,7 @@ local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
 
 local arados = {}
+local lastAradoY = 0
 
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
@@ -37,8 +39,15 @@ function love.update(dt)
     if gameState == 'play' then
 
         if spawnTimer > 2 then
-            table.insert(arados, Arado())
+            table.insert(arados, Arado(lastAradoY))
             spawnTimer = 0
+            lastAradoY = lastAradoY - 150 + math.random(300)        
+            
+            if lastAradoY < 0 then
+                lastAradoY = math.random(300)
+            elseif lastAradoY > VIRTUAL_PLAYAREA_HEIGHT then
+                lastAradoY = math.random(VIRTUAL_PLAYAREA_HEIGHT - 300, VIRTUAL_PLAYAREA_HEIGHT)
+            end
         end
 
         for key, arado in pairs(arados) do
@@ -100,7 +109,7 @@ function love.keypressed(key)
     end
     if gameState == 'start' then
         if key == 'enter' or key == 'return' or key == 'space' then
-            print('Game started')
+            lastAradoY = math.random(25, WINDOW_HEIGHT - 300)
             gameState = 'play'
         end
     end
