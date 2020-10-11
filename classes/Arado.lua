@@ -2,11 +2,12 @@ Arado = Class{}
 
 local ARADO_GRAPHIC = love.graphics.newImage('graphics/arado.png')
 
-function Arado:init(x,y)
-    self.x = x
-    self.y = y
+function Arado:init()
+    self.x = VIRTUAL_WIDTH + 50
+    self.y = 100
     self.dx = 0
     self.speed = 1
+    self.width = ARADO_GRAPHIC:getWidth()
 end
 
 function Arado:update(dt)

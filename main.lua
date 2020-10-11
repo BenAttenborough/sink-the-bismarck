@@ -12,6 +12,8 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
 
+local spawnTimer = 0;
+
 local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
 local BACKGROUND_LOOPING_POINT = 1024
@@ -23,6 +25,8 @@ local GROUND_LOOPING_POINT = 900
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
 
+local arados = {}
+
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
@@ -31,16 +35,33 @@ function love.update(dt)
         % GROUND_LOOPING_POINT
 
     if gameState == 'play' then
+
+        if spawnTimer > 2 then
+            table.insert(arados, Arado())
+            spawnTimer = 0
+        end
+
+        for key, arado in pairs(arados) do
+            arado:update(dt)
+
+            if arado.x < -arado.width then
+                table.remove(arados, key)
+            end
+        end
+
         player1:update(dt)
-        arado1:update(dt)
+        
         if bullet then
             bullet:update(dt)
         end
+        
+        spawnTimer = spawnTimer + dt        
     end
     
     if gameState == 'start' then
         bismarck1:updateIntro(dt)
     end
+
     love.keyboard.keysPressed = {}
 end
 
@@ -60,8 +81,7 @@ function love.load()
 
     player1 = Player(50, 100)
     bismarck1 = Bismarck(1050, VIRTUAL_HEIGHT - 375)
-    arado1 = Arado(VIRTUAL_WIDTH + 50, 100)
-
+    
     gameState = 'start'
 
     love.keyboard.keysPressed = {}
@@ -124,8 +144,10 @@ function love.draw()
         bismarck1:render()
     elseif gameState == 'play' then
         player1:render()
-        -- bismarck1:render()
-        arado1:render()
+        for k, arado in pairs(arados) do
+            arado:render()
+        end
+
         if bullet then
             bullet:render()
         end
