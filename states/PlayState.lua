@@ -15,6 +15,10 @@ function PlayState:init()
 end
 
 function PlayState:update(dt)
+    if love.keyboard.wasPressed('escape') then
+        gStateMachine:change('title')
+    end
+
     if isScrolling then
         if spawnTimer > 2 then
             table.insert(arados, Arado(lastAradoY))
@@ -76,4 +80,7 @@ function PlayState:render()
     for key, bullet in pairs(bullets) do
         bullet:render()
     end
+end
+
+function PlayState:exit() 
 end

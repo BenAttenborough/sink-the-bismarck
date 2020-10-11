@@ -142,9 +142,9 @@ end
 function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
     love.keyboard.keysHeld[key] = true
-    if key == 'escape' then
-        love.event.quit()
-    end
+    -- if key == 'escape' then
+    --     love.event.quit()
+    -- end
     -- if gameState == 'start' then
     --     if key == 'enter' or key == 'return' or key == 'space' then
     --         lastAradoY = math.random(25, WINDOW_HEIGHT - 300)
