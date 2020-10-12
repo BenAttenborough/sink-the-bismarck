@@ -12,6 +12,8 @@ function Player:init(x,y)
     self.graphic = love.graphics.newImage('graphics/swordfish.png')
     self.height = self.graphic:getHeight()
     self.width = self.graphic:getWidth()
+    self.firedRecently = false
+    self.bulletTimer = 0
 end
 
 function Player:update(dt)
@@ -33,8 +35,16 @@ function Player:update(dt)
     end
 
     if love.keyboard.wasHeld('space') then
-        table.insert(bullets, Bullet(self.x + self.width - 30, self.y + 15))
+        if self.firedRecently == false or self.bulletTimer > PLAYER_FIRING_INTERVAL then
+            table.insert(bullets, Bullet(self.x + self.width - 30, self.y + 15))
+            self.firedRecently = true
+            self.bulletTimer = 0
+        end
+    else
+        self.firedRecently = false
     end
+
+    if self.firedRecently then self.bulletTimer = self.bulletTimer + dt end
     
     -- If velocity move sprite, clamping it to the screen dimensions
     if self.dy < 0 then
