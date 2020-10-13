@@ -93,6 +93,7 @@ function love.draw()
 
     gStateMachine:render()
     
+    displayFPS()
 
     push:apply('end')
 end

@@ -6,7 +6,7 @@ function Arado:init(y)
     self.x = VIRTUAL_WIDTH + 50
     self.y = y
     self.dx = 0
-    self.speed = 1
+    self.speed = 5
     self.width = ARADO_GRAPHIC:getWidth()
     self.height = ARADO_GRAPHIC:getHeight()
     self.remove = false

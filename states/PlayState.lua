@@ -9,9 +9,16 @@ local spawnTimer = 0
 bullets = {}
 local arados = {}
 local lastAradoY = 0
+local score = 0
 
 function PlayState:init()
     player1 = Player(50, 100)
+    score = 0
+    isScrolling = true
+    spawnTimer = 0
+    bullets = {}
+    arados = {}
+    lastAradoY = 0
 end
 
 function PlayState:update(dt)
@@ -56,6 +63,7 @@ function PlayState:update(dt)
                 if bullet:collides(arado) then
                     bullet.remove = true
                     arado.remove = true
+                    score = score + 50
                 end
             end
             
@@ -80,7 +88,16 @@ function PlayState:render()
     for key, bullet in pairs(bullets) do
         bullet:render()
     end
+
+    displayScore()
 end
 
 function PlayState:exit() 
+end
+
+function displayScore()
+    -- simple FPS display across all states
+    love.graphics.setFont(gSmallFont)
+    love.graphics.setColor(200, 0, 0, 255)
+    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 100, 10)
 end

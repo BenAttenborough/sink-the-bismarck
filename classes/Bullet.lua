@@ -6,7 +6,7 @@ function Bullet:init(x,y)
     self.width = 2
     self.height = 2
     self.dx = 0
-    self.speed = 5
+    self.speed = 10
     self.remove = false
 end
 
