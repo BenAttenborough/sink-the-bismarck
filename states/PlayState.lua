@@ -44,6 +44,7 @@ function PlayState:update(dt)
 
             if player1:collides(arado) then
                 isScrolling = false
+                gStateMachine:change('gameover')
             end
         end
 

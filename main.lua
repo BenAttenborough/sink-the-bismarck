@@ -5,6 +5,7 @@ require 'StateMachine'
 require 'states/BaseState'
 require 'states/TitleState'
 require 'states/PlayState'
+require 'states/GameoverState'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -55,6 +56,7 @@ function love.load()
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,
         ['play'] = function() return PlayState() end,
+        ['gameover'] = function() return GameoverState() end
     }
     gStateMachine:change('title')
 
@@ -93,7 +95,7 @@ function love.draw()
 
     gStateMachine:render()
     
-    displayFPS()
+    -- displayFPS()
 
     push:apply('end')
 end
