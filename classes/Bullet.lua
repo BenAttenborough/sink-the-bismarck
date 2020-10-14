@@ -11,7 +11,7 @@ function Bullet:init(x,y)
 end
 
 function Bullet:update(dt)
-    self.dx = self.dx + self.speed * dt
+    self.dx = self.dx + (self.speed * dt)
     self.x = self.x + self.speed
     if self.x > VIRTUAL_WIDTH then
         self.remove = true

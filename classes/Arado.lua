@@ -16,7 +16,7 @@ function Arado:update(dt)
     if self.x < -self.width then
         self.remove = true
     else
-        self.dx = self.dx - self.speed * dt
+        self.dx = self.dx - (self.speed * dt)
         self.x = self.x + self.dx
     end
 end

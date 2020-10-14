@@ -37,6 +37,8 @@ function Player:update(dt)
     if love.keyboard.wasHeld('space') then
         if self.firedRecently == false or self.bulletTimer > PLAYER_FIRING_INTERVAL then
             table.insert(bullets, Bullet(self.x + self.width - 30, self.y + 15))
+            sounds['shot']:stop()
+            sounds['shot']:play()
             self.firedRecently = true
             self.bulletTimer = 0
         end

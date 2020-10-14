@@ -62,6 +62,8 @@ function PlayState:update(dt)
             
             for key, arado in pairs(arados) do
                 if bullet:collides(arado) then
+                    sounds['explosion']:stop()
+                    sounds['explosion']:play()
                     bullet.remove = true
                     arado.remove = true
                     score = score + 50
