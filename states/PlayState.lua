@@ -1,5 +1,6 @@
 PlayState = Class{__includes = BaseState}
 
+require 'classes/UI'
 require 'classes/Player'
 require 'classes/Bismarck'
 require 'classes/Arado'
@@ -12,6 +13,7 @@ local lastAradoY = 0
 local score = 0
 
 function PlayState:init()
+    ui = UI()
     player1 = Player(50, 100)
     score = 0
     isScrolling = true
@@ -67,6 +69,7 @@ function PlayState:update(dt)
                     bullet.remove = true
                     arado.remove = true
                     score = score + 50
+                    ui:setScore(score)
                 end
             end
             
@@ -77,6 +80,8 @@ function PlayState:update(dt)
                 table.remove(bullets, key)
             end
         end
+
+        ui:setAltitude(500 - math.ceil(player1.y))
 
         spawnTimer = spawnTimer + dt        
     end
@@ -92,15 +97,15 @@ function PlayState:render()
         bullet:render()
     end
 
-    displayScore()
+    ui:render()
+    -- displayScore()
 end
 
 function PlayState:exit() 
 end
 
-function displayScore()
-    -- simple FPS display across all states
-    love.graphics.setFont(gSmallFont)
-    love.graphics.setColor(200, 0, 0, 255)
-    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 100, 10)
-end
+-- function displayScore()
+--     love.graphics.setFont(gSmallFont)
+--     love.graphics.setColor(200, 0, 0, 255)
+--     love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 100, 10)
+-- end
