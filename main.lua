@@ -47,6 +47,13 @@ function love.load()
     gPlayFont = love.graphics.newFont('font.ttf', 32)
     gSmallFont = love.graphics.newFont('font.ttf', 16)
 
+    sounds = {
+        ['explosion'] = love.audio.newSource('audio/explosion.wav', 'static'),
+        ['hurt'] = love.audio.newSource('audio/hurt.wav', 'static'),
+        ['score'] = love.audio.newSource('audio/score.wav', 'static'),
+        ['shot'] = love.audio.newSource('audio/shot.wav', 'static')
+    }
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = true,
