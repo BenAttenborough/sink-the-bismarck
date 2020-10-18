@@ -1,5 +1,7 @@
 require 'classes/Bullet'
 
+local PLAYER_GRAPHIC = love.graphics.newImage('graphics/swordfishv2.png')
+
 Player = Class{}
 
 function Player:init(x,y)
@@ -9,9 +11,8 @@ function Player:init(x,y)
     self.dx = 0
     self.speedY = 200
     self.speedX = 150
-    self.graphic = love.graphics.newImage('graphics/swordfish.png')
-    self.height = self.graphic:getHeight()
-    self.width = self.graphic:getWidth()
+    self.height = PLAYER_GRAPHIC:getHeight()
+    self.width = PLAYER_GRAPHIC:getWidth()
     self.firedRecently = false
     self.bulletTimer = 0
 end
@@ -52,7 +53,7 @@ function Player:update(dt)
     if self.dy < 0 then
         self.y = math.max(0, self.y + self.dy * dt)
     else
-        self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
+        self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
     end
 
     if self.dx < 0 then
@@ -73,5 +74,5 @@ function Player:collides(obstacle)
 end
 
 function Player:render()
-    love.graphics.draw(self.graphic, self.x, self.y)
+    love.graphics.draw(PLAYER_GRAPHIC, self.x, self.y)
 end

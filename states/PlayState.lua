@@ -2,6 +2,7 @@ PlayState = Class{__includes = BaseState}
 
 require 'classes/UI'
 require 'classes/Player'
+require 'classes/Torpedo'
 require 'classes/Bismarck'
 require 'classes/Arado'
 
@@ -15,6 +16,7 @@ local score = 0
 function PlayState:init()
     ui = UI()
     player1 = Player(50, 100)
+    torpedo = Torpedo(120, 139)
     score = 0
     isScrolling = true
     spawnTimer = 0
@@ -56,6 +58,7 @@ function PlayState:update(dt)
             end
         end
 
+        torpedo:update(dt)
         player1:update(dt)
 
         for key, bullet in pairs(bullets) do
@@ -88,6 +91,7 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    torpedo:render()
     player1:render()
     for k, arado in pairs(arados) do
         arado:render()
@@ -98,14 +102,7 @@ function PlayState:render()
     end
 
     ui:render()
-    -- displayScore()
 end
 
 function PlayState:exit() 
 end
-
--- function displayScore()
---     love.graphics.setFont(gSmallFont)
---     love.graphics.setColor(200, 0, 0, 255)
---     love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 100, 10)
--- end
