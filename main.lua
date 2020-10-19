@@ -20,9 +20,11 @@ local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
 local BACKGROUND_LOOPING_POINT = 1024
 
-local groundScroll = 0
-local GROUND_SCROLL_SPEED = 100
-local GROUND_LOOPING_POINT = 900
+TOP_SEA_SCROLL_SPEED = 100
+BOTTOM_SEA_SCROLL_SPEED = 150
+GROUND_LOOPING_POINT = 900
+topSeaScroll = 0
+bottomSeaScroll = 0
 
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
@@ -30,9 +32,6 @@ local sea = love.graphics.newImage('graphics/sea.png')
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
-
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
-        % GROUND_LOOPING_POINT
 
     gStateMachine:update(dt)
 

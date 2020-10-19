@@ -36,7 +36,13 @@ function PlayState:update(dt)
         gStateMachine:change('title')
     end
 
-    if enemiesSpawned == 10 then bismarckIsStarted = true end
+    topSeaScroll = (topSeaScroll + TOP_SEA_SCROLL_SPEED * dt) 
+        % GROUND_LOOPING_POINT
+    
+    bottomSeaScroll = (bottomSeaScroll + BOTTOM_SEA_SCROLL_SPEED * dt) 
+        % GROUND_LOOPING_POINT
+
+    if enemiesSpawned == 2 then bismarckIsStarted = true end
 
     if bismarckIsStarted then
         bismarck:move(dt)
@@ -94,11 +100,11 @@ function PlayState:update(dt)
             
         end
 
-
         if torpedo and torpedo:collides(bismarck) then
             sounds['explosion']:stop()
             sounds['explosion']:play()
             bismarck.isSinking = true
+            bismarck.speed = 0.025
             torpedo = null
         end
 
@@ -115,9 +121,8 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-    if torpedo then torpedo:render() end
 
-    love.graphics.draw(sea_top, 0, VIRTUAL_HEIGHT - 49)
+    love.graphics.draw(sea_top, -topSeaScroll, VIRTUAL_HEIGHT - 49)
 
     bismarck:render()
     player1:render()
@@ -131,8 +136,9 @@ function PlayState:render()
 
     ui:render()
 
-    
-    love.graphics.draw(sea_bottom, 0, VIRTUAL_HEIGHT - 25)
+    if torpedo then torpedo:render() end
+
+    love.graphics.draw(sea_bottom, -bottomSeaScroll, VIRTUAL_HEIGHT - 40)
 end
 
 function PlayState:exit() 

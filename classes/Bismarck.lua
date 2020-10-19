@@ -3,10 +3,11 @@ Bismarck = Class{}
 function Bismarck:init(x,y)
     self.x = x
     self.y = y
-    self.graphic = love.graphics.newImage('graphics/bismarck.png')
+    self.graphic = love.graphics.newImage('graphics/bismarckv2.png')
     self.dx = 0
     self.dy = 0
     self.speed = 0.1
+    self.sinkingSpeed = 0.1
     self.width = self.graphic:getWidth()
     self.height = self.graphic:getHeight()
     self.isSinking = false
@@ -32,7 +33,7 @@ function Bismarck:move(dt)
 end
 
 function Bismarck:sink(dt)
-    self.dy = self.dy + self.speed * dt
+    self.dy = self.dy + self.sinkingSpeed * dt
     self.y = self.y + self.dy
 end
 
