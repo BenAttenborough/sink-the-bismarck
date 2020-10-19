@@ -69,7 +69,8 @@ function PlayState:update(dt)
             end
         end
 
-        torpedo:update(dt)
+        if torpedo then torpedo:update(dt) end
+
         player1:update(dt)
 
         for key, bullet in pairs(bullets) do
@@ -88,6 +89,13 @@ function PlayState:update(dt)
             
         end
 
+
+        if torpedo and torpedo:collides(bismarck) then
+            sounds['explosion']:stop()
+            sounds['explosion']:play()
+            torpedo = null
+        end
+
         for key, bullet in pairs(bullets) do
             if bullet.remove then
                 table.remove(bullets, key)
@@ -101,7 +109,7 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-    torpedo:render()
+    if torpedo then torpedo:render() end
     bismarck:render()
     player1:render()
     for k, arado in pairs(arados) do

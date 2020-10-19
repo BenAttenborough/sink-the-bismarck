@@ -6,6 +6,8 @@ function Bismarck:init(x,y)
     self.graphic = love.graphics.newImage('graphics/bismarck.png')
     self.dx = 0
     self.speed = 0.1
+    self.width = self.graphic:getWidth()
+    self.height = self.graphic:getHeight()
 end
 
 function Bismarck:update(dt)

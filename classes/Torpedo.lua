@@ -67,6 +67,16 @@ function Torpedo:update(dt)
     end
 end
 
+function Torpedo:collides(obstacle)
+    if self.isInAir then return false end
+    if (self.x + 2) + (self.width - 4) >= obstacle.x and self.x + 2 <= obstacle.x + obstacle.width then
+        if (self.y + 2) + (self.height - 4) >= obstacle.y and self.y + 2 <= obstacle.y + obstacle.height then
+            return true
+        end
+    end
+    return false
+end
+
 function Torpedo:render()
     if self.isInAir then
         love.graphics.draw(TORPEDO_GRAPHIC, self.x, self.y)
