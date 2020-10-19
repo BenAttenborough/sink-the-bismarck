@@ -1,6 +1,7 @@
 Arado = Class{}
 
 local ARADO_GRAPHIC = love.graphics.newImage('graphics/arado.png')
+local BANG_GRAPHIC = love.graphics.newImage('graphics/bang.png')
 
 function Arado:init(y)
     self.x = VIRTUAL_WIDTH + 50
