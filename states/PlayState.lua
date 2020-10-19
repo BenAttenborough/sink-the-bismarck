@@ -14,6 +14,8 @@ local lastAradoY = 0
 local score = 0
 local enemiesSpawned = 0
 local bismarckIsStarted = false
+local sea_top = love.graphics.newImage('graphics/sea_top.png')
+local sea_bottom = love.graphics.newImage('graphics/sea_bottom.png')
 
 function PlayState:init()
     ui = UI()
@@ -110,6 +112,9 @@ end
 
 function PlayState:render()
     if torpedo then torpedo:render() end
+
+    love.graphics.draw(sea_top, 0, VIRTUAL_HEIGHT - 49)
+
     bismarck:render()
     player1:render()
     for k, arado in pairs(arados) do
@@ -121,6 +126,9 @@ function PlayState:render()
     end
 
     ui:render()
+
+    
+    love.graphics.draw(sea_bottom, 0, VIRTUAL_HEIGHT - 25)
 end
 
 function PlayState:exit() 

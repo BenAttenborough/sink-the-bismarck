@@ -28,4 +28,5 @@ function UI:render()
     love.graphics.setColor(200, 0, 0, 255)
     love.graphics.print('Altitude: ' .. tostring(self.altitude), 10, 10)
     love.graphics.print('Score: ' .. tostring(self.score), VIRTUAL_WIDTH - 100, 10)
+    love.graphics.setColor( 1, 1, 1, 1 )
 end

@@ -98,7 +98,7 @@ function love.draw()
 
     love.graphics.clear(184/255, 225/255, 245/255, 255/255)
     love.graphics.draw(background, -backgroundScroll, 0)
-    love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
+    -- love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
 
     gStateMachine:render()
     
@@ -112,4 +112,5 @@ function displayFPS()
     love.graphics.setFont(gSmallFont)
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.setColor(1, 1, 1, 1)
 end
