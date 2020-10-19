@@ -50,8 +50,8 @@ function Player:update(dt)
     if self.firedRecently then self.bulletTimer = self.bulletTimer + dt end
     
     -- If velocity move sprite, clamping it to the screen dimensions
-    if self.dy < 0 then
-        self.y = math.max(0, self.y + self.dy * dt)
+    if self.dy < 35 then
+        self.y = math.max(35, self.y + self.dy * dt)
     else
         self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
     end

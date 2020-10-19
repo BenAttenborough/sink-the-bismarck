@@ -12,17 +12,21 @@ bullets = {}
 local arados = {}
 local lastAradoY = 0
 local score = 0
+local enemiesSpawned = 0
+local bismarckIsStarted = false
 
 function PlayState:init()
     ui = UI()
     player1 = Player(50, 100)
     torpedo = Torpedo(120, 139)
+    bismarck = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     score = 0
     isScrolling = true
     spawnTimer = 0
     bullets = {}
     arados = {}
     lastAradoY = 0
+    enemiesSpawned = 0
 end
 
 function PlayState:update(dt)
@@ -30,9 +34,16 @@ function PlayState:update(dt)
         gStateMachine:change('title')
     end
 
+    if enemiesSpawned == 10 then bismarckIsStarted = true end
+
+    if bismarckIsStarted then
+        bismarck:move(dt)
+    end
+
     if isScrolling then
         if spawnTimer > 2 then
             table.insert(arados, Arado(lastAradoY))
+            enemiesSpawned = enemiesSpawned + 1
             spawnTimer = 0
             lastAradoY = lastAradoY - 150 + math.random(300)        
             
@@ -64,7 +75,6 @@ function PlayState:update(dt)
         for key, bullet in pairs(bullets) do
             bullet:update(dt)
     
-            
             for key, arado in pairs(arados) do
                 if bullet:collides(arado) then
                     sounds['explosion']:stop()
@@ -92,6 +102,7 @@ end
 
 function PlayState:render()
     torpedo:render()
+    bismarck:render()
     player1:render()
     for k, arado in pairs(arados) do
         arado:render()

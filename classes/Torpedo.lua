@@ -53,8 +53,8 @@ function Torpedo:update(dt)
         end
 
         -- If velocity move sprite, clamping it to the screen dimensions
-        if self.dy < 0 then
-            self.y = math.max(0, self.y + self.dy * dt)
+        if self.dy < 73 then
+            self.y = math.max(73, self.y + self.dy * dt)
         else
             self.y = math.min(VIRTUAL_HEIGHT - self.height - 63, self.y + self.dy * dt)
         end

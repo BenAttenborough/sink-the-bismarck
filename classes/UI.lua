@@ -4,7 +4,7 @@ function UI:init()
     self.x = 0
     self.y = 0
     self.width = WINDOW_WIDTH
-    self.height = 100
+    self.height = 35
     self.score = 0
     self.altitude = 0
 end
