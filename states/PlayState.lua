@@ -38,6 +38,9 @@ function PlayState:update(dt)
 
     if bismarckIsStarted then
         bismarck:move(dt)
+        if bismarck.isSinking then
+            bismarck:sink(dt)
+        end
     end
 
     if isScrolling then
@@ -93,6 +96,7 @@ function PlayState:update(dt)
         if torpedo and torpedo:collides(bismarck) then
             sounds['explosion']:stop()
             sounds['explosion']:play()
+            bismarck.isSinking = true
             torpedo = null
         end
 
