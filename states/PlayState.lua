@@ -1,6 +1,8 @@
 PlayState = Class{__includes = BaseState}
 
+require 'classes/UI'
 require 'classes/Player'
+require 'classes/Torpedo'
 require 'classes/Bismarck'
 require 'classes/Arado'
 
@@ -10,15 +12,21 @@ bullets = {}
 local arados = {}
 local lastAradoY = 0
 local score = 0
+local enemiesSpawned = 0
+local bismarckIsStarted = false
 
 function PlayState:init()
+    ui = UI()
     player1 = Player(50, 100)
+    torpedo = Torpedo(120, 139)
+    bismarck = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     score = 0
     isScrolling = true
     spawnTimer = 0
     bullets = {}
     arados = {}
     lastAradoY = 0
+    enemiesSpawned = 0
 end
 
 function PlayState:update(dt)
@@ -26,9 +34,16 @@ function PlayState:update(dt)
         gStateMachine:change('title')
     end
 
+    if enemiesSpawned == 10 then bismarckIsStarted = true end
+
+    if bismarckIsStarted then
+        bismarck:move(dt)
+    end
+
     if isScrolling then
         if spawnTimer > 2 then
             table.insert(arados, Arado(lastAradoY))
+            enemiesSpawned = enemiesSpawned + 1
             spawnTimer = 0
             lastAradoY = lastAradoY - 150 + math.random(300)        
             
@@ -54,12 +69,13 @@ function PlayState:update(dt)
             end
         end
 
+        if torpedo then torpedo:update(dt) end
+
         player1:update(dt)
 
         for key, bullet in pairs(bullets) do
             bullet:update(dt)
     
-            
             for key, arado in pairs(arados) do
                 if bullet:collides(arado) then
                     sounds['explosion']:stop()
@@ -67,9 +83,17 @@ function PlayState:update(dt)
                     bullet.remove = true
                     arado.remove = true
                     score = score + 50
+                    ui:setScore(score)
                 end
             end
             
+        end
+
+
+        if torpedo and torpedo:collides(bismarck) then
+            sounds['explosion']:stop()
+            sounds['explosion']:play()
+            torpedo = null
         end
 
         for key, bullet in pairs(bullets) do
@@ -78,11 +102,15 @@ function PlayState:update(dt)
             end
         end
 
+        ui:setAltitude(500 - math.ceil(player1.y))
+
         spawnTimer = spawnTimer + dt        
     end
 end
 
 function PlayState:render()
+    if torpedo then torpedo:render() end
+    bismarck:render()
     player1:render()
     for k, arado in pairs(arados) do
         arado:render()
@@ -92,15 +120,8 @@ function PlayState:render()
         bullet:render()
     end
 
-    displayScore()
+    ui:render()
 end
 
 function PlayState:exit() 
-end
-
-function displayScore()
-    -- simple FPS display across all states
-    love.graphics.setFont(gSmallFont)
-    love.graphics.setColor(200, 0, 0, 255)
-    love.graphics.print('Score: ' .. tostring(score), VIRTUAL_WIDTH - 100, 10)
 end
