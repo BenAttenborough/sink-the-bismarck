@@ -20,9 +20,11 @@ local backgroundScroll = 0
 local BACKGROUND_SCROLL_SPEED = 30
 local BACKGROUND_LOOPING_POINT = 1024
 
-local groundScroll = 0
-local GROUND_SCROLL_SPEED = 100
-local GROUND_LOOPING_POINT = 900
+TOP_SEA_SCROLL_SPEED = 100
+BOTTOM_SEA_SCROLL_SPEED = 150
+GROUND_LOOPING_POINT = 900
+topSeaScroll = 0
+bottomSeaScroll = 0
 
 local background = love.graphics.newImage('graphics/background2.png')
 local sea = love.graphics.newImage('graphics/sea.png')
@@ -30,9 +32,6 @@ local sea = love.graphics.newImage('graphics/sea.png')
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
-
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
-        % GROUND_LOOPING_POINT
 
     gStateMachine:update(dt)
 
@@ -98,7 +97,7 @@ function love.draw()
 
     love.graphics.clear(184/255, 225/255, 245/255, 255/255)
     love.graphics.draw(background, -backgroundScroll, 0)
-    love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
+    -- love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
 
     gStateMachine:render()
     
@@ -112,4 +111,5 @@ function displayFPS()
     love.graphics.setFont(gSmallFont)
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.setColor(1, 1, 1, 1)
 end

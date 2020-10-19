@@ -22,7 +22,7 @@ function Torpedo:update(dt)
     self.dx = 0
 
     if self.isDropped then
-        if self.y > VIRTUAL_HEIGHT - self.height - 60 then self.isInAir = false end
+        if self.y > VIRTUAL_HEIGHT - self.height - 55 then self.isInAir = false end
         if self.isInAir then
             self.dy = self.speedY
             -- self.y = math.max(0, self.y + self.dy * dt)
