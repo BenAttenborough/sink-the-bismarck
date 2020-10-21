@@ -26,5 +26,4 @@ function GameoverState:render()
 
     love.graphics.draw(sea_top, -topSeaScroll, VIRTUAL_HEIGHT - 40)
     love.graphics.draw(sea_bottom, -bottomSeaScroll, VIRTUAL_HEIGHT - 49)
-
 end

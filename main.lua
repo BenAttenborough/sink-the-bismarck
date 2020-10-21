@@ -1,5 +1,6 @@
 push = require 'libs/push'
 Class = require 'libs/class'
+Timer = require 'libs/timer'
 
 require 'StateMachine'
 require 'states/BaseState'
@@ -32,6 +33,8 @@ local sea = love.graphics.newImage('graphics/sea.png')
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
+
+    Timer.update(dt)
 
     gStateMachine:update(dt)
 

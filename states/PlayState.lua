@@ -29,6 +29,7 @@ function PlayState:init()
     arados = {}
     lastAradoY = 0
     enemiesSpawned = 0
+    player1:spinProp()
 end
 
 function PlayState:update(dt)
