@@ -25,7 +25,7 @@ function Arado:init(y)
 
     -- spread of particles; normal looks more natural than uniform, which is clumpy; numbers
     -- are amount of standard deviation away in X and Y axis
-    self.psystemExplosion:setEmissionArea('normal', 15, 15)
+    self.psystemExplosion:setEmissionArea('uniform', 15, 15)
     self.psystemSmoke:setEmissionArea('uniform', 10, 10)
 end
 

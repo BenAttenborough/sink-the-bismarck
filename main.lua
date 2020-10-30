@@ -95,18 +95,22 @@ function love.keyboard.wasHeld(key)
 end
 
 function love.draw()
+    
     -- begin rendering at virtual resolution
     push:apply('start')
+
 
     love.graphics.clear(184/255, 225/255, 245/255, 255/255)
     love.graphics.draw(background, -backgroundScroll, 0)
     -- love.graphics.draw(sea, -groundScroll, VIRTUAL_HEIGHT - 49)
 
     gStateMachine:render()
-    
+
     -- displayFPS()
 
     push:apply('end')
+
+
 end
 
 function displayFPS()
