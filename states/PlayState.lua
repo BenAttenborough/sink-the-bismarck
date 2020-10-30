@@ -90,10 +90,10 @@ function PlayState:update(dt)
     
             for key, arado in pairs(arados) do
                 if bullet:collides(arado) then
-                    sounds['explosion']:stop()
-                    sounds['explosion']:play()
+                    arado:hit()
+                    
                     bullet.remove = true
-                    arado.remove = true
+                    -- arado.remove = true
                     score = score + 50
                     ui:setScore(score)
                 end
@@ -129,6 +129,10 @@ function PlayState:render()
     player1:render()
     for k, arado in pairs(arados) do
         arado:render()
+    end
+
+    for k, arado in pairs(arados) do
+        arado:renderParticles()
     end
 
     for key, bullet in pairs(bullets) do
