@@ -32,6 +32,7 @@ function PlayState:init()
     lastAradoY = 0
     enemiesSpawned = 0
     player1:spinProp()
+    aradoAdditonalSpeed = 0
 end
 
 function PlayState:update(dt)
@@ -56,10 +57,11 @@ function PlayState:update(dt)
 
     if isScrolling then
         if spawnTimer > 2 then
-            table.insert(arados, Arado(lastAradoY))
+            table.insert(arados, Arado(lastAradoY, aradoAdditonalSpeed))
             enemiesSpawned = enemiesSpawned + 1
             spawnTimer = 0
-            lastAradoY = lastAradoY - 150 + math.random(300)        
+            lastAradoY = lastAradoY - 150 + math.random(300)  
+            aradoAdditonalSpeed = math.min(aradoAdditonalSpeed + 30, 900)
             
             if lastAradoY < 0 then
                 lastAradoY = math.random(300)

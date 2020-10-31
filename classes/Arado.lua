@@ -4,12 +4,12 @@ local ARADO_GRAPHIC = love.graphics.newImage('graphics/arado.png')
 local BANG_GRAPHIC = love.graphics.newImage('graphics/bang.png')
 local EXPLOSION_GRAPHIC = love.graphics.newImage('graphics/particle.png')
 
-function Arado:init(y)
+function Arado:init(y, additionalSpeed)
     self.x = VIRTUAL_WIDTH + 50
     self.y = y
     self.dx = 0
     self.dy = 0
-    self.speed = 300
+    self.speed = 300 + additionalSpeed
     self.width = ARADO_GRAPHIC:getWidth()
     self.height = ARADO_GRAPHIC:getHeight()
     self.remove = false
