@@ -8,6 +8,7 @@ function Arado:init(y)
     self.x = VIRTUAL_WIDTH + 50
     self.y = y
     self.dx = 0
+    self.dy = 0
     self.speed = 3
     self.width = ARADO_GRAPHIC:getWidth()
     self.height = ARADO_GRAPHIC:getHeight()
@@ -27,44 +28,55 @@ function Arado:init(y)
     -- are amount of standard deviation away in X and Y axis
     self.psystemExplosion:setEmissionArea('uniform', 15, 15)
     self.psystemSmoke:setEmissionArea('uniform', 10, 10)
+    self.isHit = false
 end
 
 function Arado:update(dt)
     if self.x < -self.width then
         self.remove = true
     else
-        self.dx = self.dx - (self.speed * dt)
-        self.x = self.x + self.dx
+        if self.isHit == false then
+            self.dx = self.dx - (self.speed * dt)
+            self.x = self.x + self.dx
+        else
+            self.dx = self.dx - (0.25 * dt)
+            self.x = self.x + self.dx
+            self.dy = self.dy - (8 * dt)
+            self.y = self.y - self.dy
+        end
     end
     self.psystemExplosion:update(dt)
     self.psystemSmoke:update(dt)
 end
 
 function Arado:hit()
-    sounds['explosion']:stop()
-    sounds['explosion']:play()
-    self.psystemExplosion:setColors(
-        251 / 255,
-        242 / 255,
-        54 / 255,
-        150 / 255,
-        200 / 255,
-        200 / 255,
-        200 / 255,
-        0
-    )
-    self.psystemExplosion:emit(64)
-    self.psystemSmoke:setColors(
-        255 / 255,
-        255 / 255,
-        255 / 255,
-        150 / 255,
-        255 / 255,
-        255 / 255,
-        255 / 255,
-        0
-    )
-    self.psystemSmoke:emit(64)
+    if self.isHit == false then
+        sounds['explosion']:stop()
+        sounds['explosion']:play()
+        self.psystemExplosion:setColors(
+            251 / 255,
+            242 / 255,
+            54 / 255,
+            150 / 255,
+            200 / 255,
+            200 / 255,
+            200 / 255,
+            0
+        )
+        self.psystemExplosion:emit(64)
+        self.psystemSmoke:setColors(
+            255 / 255,
+            255 / 255,
+            255 / 255,
+            150 / 255,
+            255 / 255,
+            255 / 255,
+            255 / 255,
+            0
+        )
+        self.psystemSmoke:emit(64)
+        self.isHit = true
+    end
 end
 
 function Arado:render()
