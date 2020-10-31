@@ -5,6 +5,7 @@ Timer = require 'libs/timer'
 require 'StateMachine'
 require 'states/BaseState'
 require 'states/TitleState'
+require 'states/TakeoffState'
 require 'states/PlayState'
 require 'states/GameoverState'
 
@@ -65,6 +66,7 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,
+        ['takeoff'] = function() return TakeoffState() end,
         ['play'] = function() return PlayState() end,
         ['gameover'] = function() return GameoverState() end
     }

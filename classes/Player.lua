@@ -20,6 +20,7 @@ function Player:init(x,y)
     self.bulletTimer = 0
     self.planeFrame = 1
     self.playerTimer = Timer.new()
+    self.state = 'takeoff'
 end
 
 function Player:spinProp()
@@ -39,6 +40,48 @@ function Player:update(dt)
     self.dy = 0
     self.dx = 0
 
+    if self.state == 'takeoff' then
+        self:takeoff(dt)
+    else
+        self:flight(dt)
+    end
+end
+
+function Player:collides(obstacle)
+    if (self.x + 2) + (self.width - 4) >= obstacle.x and self.x + 2 <= obstacle.x + obstacle.width then
+        if (self.y + 2) + (self.height - 4) >= obstacle.y and self.y + 2 <= obstacle.y + obstacle.height then
+            return true
+        end
+    end
+
+    return false
+end
+
+function Player:render()
+    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y)
+end
+
+function Player:takeoff(dt)
+    if love.keyboard.wasHeld('left') then
+        self.dx = -self.speedX
+    elseif love.keyboard.wasHeld('right') then
+        self.dx = self.speedX
+    end
+
+    if self.dy < 35 then
+        self.y = math.max(35, self.y + self.dy * dt)
+    else
+        self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
+    end
+
+    if self.dx < 0 then
+        self.x = math.max(0, self.x + self.dx * dt)
+    else
+        self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+    end
+end
+
+function Player:flight(dt)
     -- Check keyboard inputs
     if love.keyboard.wasHeld('up') then
         self.dy = -self.speedY
@@ -78,18 +121,4 @@ function Player:update(dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
-end
-
-function Player:collides(obstacle)
-    if (self.x + 2) + (self.width - 4) >= obstacle.x and self.x + 2 <= obstacle.x + obstacle.width then
-        if (self.y + 2) + (self.height - 4) >= obstacle.y and self.y + 2 <= obstacle.y + obstacle.height then
-            return true
-        end
-    end
-
-    return false
-end
-
-function Player:render()
-    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y)
 end
