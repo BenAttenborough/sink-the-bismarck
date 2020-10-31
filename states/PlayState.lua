@@ -83,6 +83,7 @@ function PlayState:update(dt)
 
         for key, arado in pairs(arados) do
             if arado.remove then
+                print("removing arado")
                 table.remove(arados, key)
             end
         end

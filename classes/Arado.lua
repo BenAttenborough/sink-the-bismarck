@@ -15,25 +15,29 @@ function Arado:init(y)
     self.remove = false
     self.psystemExplosion = love.graphics.newParticleSystem(EXPLOSION_GRAPHIC, 64)
     self.psystemSmoke = love.graphics.newParticleSystem(EXPLOSION_GRAPHIC, 64)
+    self.psystemSplash = love.graphics.newParticleSystem(EXPLOSION_GRAPHIC, 64)
     -- lasts between 0.5-1 seconds seconds
     self.psystemExplosion:setParticleLifetime(0.5, 1)
     self.psystemSmoke:setParticleLifetime(2, 3)
+    self.psystemSplash:setParticleLifetime(0.5, 1.5)
 
     -- give it an acceleration of anywhere between X1,Y1 and X2,Y2 (0, 0) and (80, 80) here
     -- gives generally downward 
     self.psystemExplosion:setLinearAcceleration(-15, 0, 15, 80)
     self.psystemSmoke:setLinearAcceleration(15, 0, 0, -80)
+    self.psystemSplash:setLinearAcceleration(15, 0, 0, -40)
 
     -- spread of particles; normal looks more natural than uniform, which is clumpy; numbers
     -- are amount of standard deviation away in X and Y axis
     self.psystemExplosion:setEmissionArea('uniform', 15, 15)
     self.psystemSmoke:setEmissionArea('uniform', 10, 10)
+    self.psystemSplash:setEmissionArea('uniform', 80, 10)
     self.isHit = false
     self.isSunk = false
 end
 
 function Arado:update(dt)
-    if self.x < -self.width then
+    if self.x < - self.width then
         self.remove = true
     else
         if self.isHit == false then
@@ -47,6 +51,7 @@ function Arado:update(dt)
     end
     self.psystemExplosion:update(dt)
     self.psystemSmoke:update(dt)
+    self.psystemSplash:update(dt)
 end
 
 function Arado:hit()
@@ -82,6 +87,17 @@ end
 function Arado:splash()
     sounds['splash']:stop()
     sounds['splash']:play()
+    self.psystemSplash:setColors(
+            255 / 255,
+            255 / 255,
+            255 / 255,
+            150 / 255,
+            0 / 255,
+            0 / 255,
+            255 / 255,
+            0
+        )
+    self.psystemSplash:emit(64)
     self.isSunk = true
 end
 
@@ -92,4 +108,5 @@ end
 function Arado:renderParticles()
     love.graphics.draw(self.psystemExplosion, self.x + 40, self.y + 20)
     love.graphics.draw(self.psystemSmoke, self.x + 40, self.y + 20)
+    love.graphics.draw(self.psystemSplash, self.x + 40, VIRTUAL_HEIGHT - 49)
 end
