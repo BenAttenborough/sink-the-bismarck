@@ -9,7 +9,7 @@ function Arado:init(y)
     self.y = y
     self.dx = 0
     self.dy = 0
-    self.speed = 3
+    self.speed = 300
     self.width = ARADO_GRAPHIC:getWidth()
     self.height = ARADO_GRAPHIC:getHeight()
     self.remove = false
@@ -29,6 +29,7 @@ function Arado:init(y)
     self.psystemExplosion:setEmissionArea('uniform', 15, 15)
     self.psystemSmoke:setEmissionArea('uniform', 10, 10)
     self.isHit = false
+    self.isSunk = false
 end
 
 function Arado:update(dt)
@@ -36,11 +37,10 @@ function Arado:update(dt)
         self.remove = true
     else
         if self.isHit == false then
-            self.dx = self.dx - (self.speed * dt)
-            self.x = self.x + self.dx
+            -- self.dx = self.dx - (self.speed * dt)
+            self.x = self.x - (self.speed * dt)
         else
-            self.dx = self.dx - (0.25 * dt)
-            self.x = self.x + self.dx
+            self.x = self.x - (200 * dt)
             self.dy = self.dy - (8 * dt)
             self.y = self.y - self.dy
         end
@@ -77,6 +77,12 @@ function Arado:hit()
         self.psystemSmoke:emit(64)
         self.isHit = true
     end
+end
+
+function Arado:splash()
+    sounds['splash']:stop()
+    sounds['splash']:play()
+    self.isSunk = true
 end
 
 function Arado:render()

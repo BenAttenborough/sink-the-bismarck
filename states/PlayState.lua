@@ -75,6 +75,10 @@ function PlayState:update(dt)
                 isScrolling = false
                 gStateMachine:change('gameover')
             end
+
+            if ocean:collides(arado) and arado.isSunk == false then
+                arado:splash()
+            end
         end
 
         for key, arado in pairs(arados) do

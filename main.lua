@@ -53,7 +53,8 @@ function love.load()
         ['explosion'] = love.audio.newSource('audio/explosion.wav', 'static'),
         ['hurt'] = love.audio.newSource('audio/hurt.wav', 'static'),
         ['score'] = love.audio.newSource('audio/score.wav', 'static'),
-        ['shot'] = love.audio.newSource('audio/shot.wav', 'static')
+        ['shot'] = love.audio.newSource('audio/shot.wav', 'static'),
+        ['splash'] = love.audio.newSource('audio/splash.wav', 'static')
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
