@@ -5,6 +5,7 @@ require 'classes/Player'
 require 'classes/Torpedo'
 require 'classes/Bismarck'
 require 'classes/Arado'
+require 'classes/Ocean'
 
 local isScrolling = true
 local spawnTimer = 0
@@ -22,6 +23,7 @@ function PlayState:init()
     player1 = Player(50, 100)
     torpedo = Torpedo(120, 139)
     bismarck = Bismarck(1050, VIRTUAL_HEIGHT - 375)
+    ocean = Ocean()
     score = 0
     isScrolling = true
     spawnTimer = 0
