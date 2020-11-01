@@ -1,4 +1,5 @@
 require 'utils/generalUtils'
+require 'classes/Torpedo'
 
 local PLAYER_GRAPHIC = love.graphics.newImage('graphics/swordfishv2.png')
 local planeAtlas = love.graphics.newImage('graphics/swordfishv3.png')
@@ -25,6 +26,7 @@ function TakeoffPlane:init(x,y)
     self.rotationOriginY = 52
     self.grounded = true
     self.canLiftOff = false
+    self.torpedo = Torpedo(self.x + 70, self.y + 39)
 end
 
 function TakeoffPlane:spinProp()
@@ -67,6 +69,8 @@ function TakeoffPlane:update(dt)
         self.grounded = false
         self:moveToHorizontal()
     end
+
+    if self.torpedo then self.torpedo:update(dt, self.x, self.y) end
 end
 
 function TakeoffPlane:collides(obstacle)
@@ -96,4 +100,5 @@ end
 
 function TakeoffPlane:render()
     love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y, math.rad(self.rotation), 1, 1, self.rotationOriginX, self.rotationOriginY)
+    if self.torpedo then self.torpedo:renderLaunch(self.rotation) end
 end

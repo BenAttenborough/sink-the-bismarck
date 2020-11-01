@@ -62,3 +62,7 @@ function Torpedo:render()
         love.graphics.draw(SPRAY_GRAPHIC, self.x, self.y)
     end
 end
+
+function Torpedo:renderLaunch(rotation)
+    love.graphics.draw(TORPEDO_GRAPHIC, self.x - self.offsetX, self.y - self.offsetY - 12, math.rad(rotation), 1, 1, 50)
+end
