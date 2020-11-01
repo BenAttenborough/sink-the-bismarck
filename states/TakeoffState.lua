@@ -14,7 +14,6 @@ function TakeoffState:init()
     player1 = TakeoffPlane(50, 420)
     arkRoyal = ArkRoyal()
     player1:spinProp()
-    player1:moveToHorizontal()
 end
 
 function TakeoffState:update(dt)
@@ -27,6 +26,8 @@ function TakeoffState:update(dt)
     
     bottomSeaScroll = (bottomSeaScroll + 30 * dt) 
         % GROUND_LOOPING_POINT
+
+    ui:setSpeed(player1.dx)
 
     if isScrolling then
         player1:update(dt)

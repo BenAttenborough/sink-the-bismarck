@@ -7,6 +7,7 @@ function UI:init()
     self.height = 35
     self.score = 0
     self.altitude = 0
+    self.speed = 'foo'
 end
 
 function UI:update(dt)
@@ -21,12 +22,17 @@ function UI:setAltitude(amount)
     self.altitude = amount
 end
 
+function UI:setSpeed(speed)
+    self.speed = speed
+end
+
 function UI:render()
     love.graphics.setColor( 0, 0, 0, 1 )
     love.graphics.rectangle( 'fill', self.x, self.y, self.width, self.height )
     love.graphics.setFont(gSmallFont)
     love.graphics.setColor(200, 0, 0, 255)
     love.graphics.print('Altitude: ' .. tostring(self.altitude), 10, 10)
+    love.graphics.print('Speed: ' .. tostring(self.speed), (VIRTUAL_WIDTH / 2) - 50, 10)
     love.graphics.print('Score: ' .. tostring(self.score), VIRTUAL_WIDTH - 100, 10)
     love.graphics.setColor( 1, 1, 1, 1 )
 end

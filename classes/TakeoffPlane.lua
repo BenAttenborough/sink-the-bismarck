@@ -12,7 +12,7 @@ function TakeoffPlane:init(x,y)
     self.dy = 0
     self.dx = 0
     self.speedY = 200
-    self.speedX = 150
+    self.speedX = 50
     self.height = PLAYER_GRAPHIC:getHeight()
     self.width = PLAYER_GRAPHIC:getWidth()
     self.firedRecently = false
@@ -23,6 +23,7 @@ function TakeoffPlane:init(x,y)
     self.rotation = -10
     self.rotationOriginX = 115
     self.rotationOriginY = 52
+    self.grounded = true
 end
 
 function TakeoffPlane:spinProp()
@@ -40,18 +41,17 @@ function TakeoffPlane:update(dt)
     
     -- Reset velocity each frame (otherwise sprite will continually move)
     self.dy = 0
-    self.dx = 0
 
     if love.keyboard.wasHeld('left') then
-        self.dx = -self.speedX
+        -- self.dx = -self.speedX
     elseif love.keyboard.wasHeld('right') then
-        self.dx = self.speedX
+        self.dx = math.min(self.dx + (self.speedX * dt), 200)
     end
 
     if love.keyboard.wasHeld('up') then
-        self.rotation = self.rotation + 1
+        -- self.rotation = self.rotation + 1
     elseif love.keyboard.wasHeld('down') then
-        self.rotation = self.rotation - 1 
+        -- self.rotation = self.rotation - 1 
     end
 
     if self.dy < 35 then
@@ -64,6 +64,11 @@ function TakeoffPlane:update(dt)
         self.x = math.max(0, self.x + self.dx * dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+    end
+
+    if self.dx > 150 and self.grounded then
+        self.grounded = false
+        self:moveToHorizontal()
     end
 end
 
