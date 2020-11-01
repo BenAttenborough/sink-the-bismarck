@@ -1,7 +1,7 @@
 TakeoffState = Class{__includes = BaseState}
 
 require 'classes/UI'
-require 'classes/Player'
+require 'classes/TakeoffPlane'
 require 'classes/Torpedo'
 require 'classes/ArkRoyal'
 
@@ -11,7 +11,7 @@ local sea_bottom = love.graphics.newImage('graphics/sea_bottom.png')
 
 function TakeoffState:init()
     ui = UI()
-    player1 = Player(50, 420)
+    player1 = TakeoffPlane(50, 420)
     arkRoyal = ArkRoyal()
 end
 
