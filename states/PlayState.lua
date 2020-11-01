@@ -149,8 +149,6 @@ function PlayState:render()
 
     ui:render()
 
-    -- if torpedo then torpedo:render() end
-
     love.graphics.draw(sea_bottom, -bottomSeaScroll, VIRTUAL_HEIGHT - 40)
 end
 

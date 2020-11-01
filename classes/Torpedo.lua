@@ -27,7 +27,6 @@ function Torpedo:update(dt, x, y)
         if self.y > VIRTUAL_HEIGHT - self.height - 55 then self.isInAir = false end
         if self.isInAir then
             self.dy = self.speedY
-            -- self.y = math.max(0, self.y + self.dy * dt)
             self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
         else
             self.dx = self.speedX
@@ -43,32 +42,6 @@ function Torpedo:update(dt, x, y)
         if love.keyboard.wasPressed('z') then
             self.isDropped = true
         end
-
-        -- Check keyboard inputs
-        -- if love.keyboard.wasHeld('up') then
-        --     self.dy = -self.speedY
-        -- elseif love.keyboard.wasHeld('down') then
-        --     self.dy = self.speedY
-        -- end
-
-        -- if love.keyboard.wasHeld('left') then
-        --     self.dx = -self.speedX
-        -- elseif love.keyboard.wasHeld('right') then
-        --     self.dx = self.speedX
-        -- end
-
-        -- If velocity move sprite, clamping it to the screen dimensions
-        -- if self.dy < 73 then
-        --     self.y = math.max(73, self.y + self.dy * dt)
-        -- else
-        --     self.y = math.min(VIRTUAL_HEIGHT - self.height - 63, self.y + self.dy * dt)
-        -- end
-
-        -- if self.dx < 0 then
-        --     self.x = math.max(0, self.x + self.dx * dt)
-        -- else
-        --     self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
-        -- end
     end
 end
 
