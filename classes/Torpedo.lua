@@ -8,6 +8,8 @@ function Torpedo:init(x,y)
     self.y = y
     self.dy = 0
     self.dx = 0
+    self.offsetX = 70
+    self.offsetY = 39
     self.speedY = 200
     self.speedX = 150
     self.height = TORPEDO_GRAPHIC:getHeight()
@@ -16,7 +18,7 @@ function Torpedo:init(x,y)
     self.isInAir = true
 end
 
-function Torpedo:update(dt)
+function Torpedo:update(dt, x, y)
     -- Reset velocity each frame (otherwise sprite will continually move)
     self.dy = 0
     self.dx = 0
@@ -31,6 +33,9 @@ function Torpedo:update(dt)
             self.dx = self.speedX
             self.x = math.min(VIRTUAL_WIDTH - self.width + 50, self.x + self.dx * dt)
         end
+    else
+        self.x = x + self.offsetX
+        self.y = y + self.offsetY
     end
 
     if self.isDropped == false then
@@ -40,30 +45,30 @@ function Torpedo:update(dt)
         end
 
         -- Check keyboard inputs
-        if love.keyboard.wasHeld('up') then
-            self.dy = -self.speedY
-        elseif love.keyboard.wasHeld('down') then
-            self.dy = self.speedY
-        end
+        -- if love.keyboard.wasHeld('up') then
+        --     self.dy = -self.speedY
+        -- elseif love.keyboard.wasHeld('down') then
+        --     self.dy = self.speedY
+        -- end
 
-        if love.keyboard.wasHeld('left') then
-            self.dx = -self.speedX
-        elseif love.keyboard.wasHeld('right') then
-            self.dx = self.speedX
-        end
+        -- if love.keyboard.wasHeld('left') then
+        --     self.dx = -self.speedX
+        -- elseif love.keyboard.wasHeld('right') then
+        --     self.dx = self.speedX
+        -- end
 
         -- If velocity move sprite, clamping it to the screen dimensions
-        if self.dy < 73 then
-            self.y = math.max(73, self.y + self.dy * dt)
-        else
-            self.y = math.min(VIRTUAL_HEIGHT - self.height - 63, self.y + self.dy * dt)
-        end
+        -- if self.dy < 73 then
+        --     self.y = math.max(73, self.y + self.dy * dt)
+        -- else
+        --     self.y = math.min(VIRTUAL_HEIGHT - self.height - 63, self.y + self.dy * dt)
+        -- end
 
-        if self.dx < 0 then
-            self.x = math.max(0, self.x + self.dx * dt)
-        else
-            self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
-        end
+        -- if self.dx < 0 then
+        --     self.x = math.max(0, self.x + self.dx * dt)
+        -- else
+        --     self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+        -- end
     end
 end
 

@@ -1,5 +1,6 @@
 require 'classes/Bullet'
 require 'utils/generalUtils'
+require 'classes/Torpedo'
 
 local PLAYER_GRAPHIC = love.graphics.newImage('graphics/swordfishv2.png')
 local planeAtlas = love.graphics.newImage('graphics/swordfishv3.png')
@@ -20,6 +21,7 @@ function Player:init(x,y)
     self.bulletTimer = 0
     self.planeFrame = 1
     self.playerTimer = Timer.new()
+    self.torpedo = Torpedo(self.x + 70, self.y + 39)
 end
 
 function Player:spinProp()
@@ -78,6 +80,9 @@ function Player:update(dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
+
+    if self.torpedo then self.torpedo:update(dt, self.x, self.y) end
+
 end
 
 function Player:collides(obstacle)
@@ -92,4 +97,5 @@ end
 
 function Player:render()
     love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y)
+    if self.torpedo then self.torpedo:render() end
 end

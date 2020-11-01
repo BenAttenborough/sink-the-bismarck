@@ -2,7 +2,7 @@ PlayState = Class{__includes = BaseState}
 
 require 'classes/UI'
 require 'classes/Player'
-require 'classes/Torpedo'
+-- require 'classes/Torpedo'
 require 'classes/Bismarck'
 require 'classes/Arado'
 require 'classes/Ocean'
@@ -19,11 +19,9 @@ local sea_top = love.graphics.newImage('graphics/sea_top.png')
 local sea_bottom = love.graphics.newImage('graphics/sea_bottom.png')
 
 function PlayState:enter(params)
-    -- self.player1.x = params.playerX
-    -- self.player1.y = params.playerY
     ui = UI()
     player1 = Player(params.playerX, params.playerY)
-    torpedo = Torpedo(params.playerX + 70, params.playerY + 39)
+    -- torpedo = Torpedo(params.playerX + 70, params.playerY + 39)
     bismarck = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     ocean = Ocean()
     score = 0
@@ -91,7 +89,7 @@ function PlayState:update(dt)
             end
         end
 
-        if torpedo then torpedo:update(dt) end
+        -- if torpedo then torpedo:update(dt) end
 
         player1:update(dt)
 
@@ -111,13 +109,13 @@ function PlayState:update(dt)
             
         end
 
-        if torpedo and torpedo:collides(bismarck) then
-            sounds['explosion']:stop()
-            sounds['explosion']:play()
-            bismarck.isSinking = true
-            bismarck.speed = 0.025
-            torpedo = null
-        end
+        -- if torpedo and torpedo:collides(bismarck) then
+        --     sounds['explosion']:stop()
+        --     sounds['explosion']:play()
+        --     bismarck.isSinking = true
+        --     bismarck.speed = 0.025
+        --     torpedo = null
+        -- end
 
         for key, bullet in pairs(bullets) do
             if bullet.remove then
@@ -151,7 +149,7 @@ function PlayState:render()
 
     ui:render()
 
-    if torpedo then torpedo:render() end
+    -- if torpedo then torpedo:render() end
 
     love.graphics.draw(sea_bottom, -bottomSeaScroll, VIRTUAL_HEIGHT - 40)
 end
