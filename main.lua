@@ -9,8 +9,8 @@ require 'states/TakeoffState'
 require 'states/PlayState'
 require 'states/GameoverState'
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+WINDOW_WIDTH = 1024
+WINDOW_HEIGHT = 576
 
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576

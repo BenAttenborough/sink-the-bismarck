@@ -3,7 +3,7 @@ ArkRoyal = Class{}
 function ArkRoyal:init()
     self.x = -400
     self.y = 100
-    self.graphic = love.graphics.newImage('graphics/arkroyal.png')
+    self.graphic = love.graphics.newImage('graphics/arkroyal-old.png')
     -- self.speed = 0.1
     self.dx = 0
     self.width = 500
