@@ -18,10 +18,12 @@ local bismarckIsStarted = false
 local sea_top = love.graphics.newImage('graphics/sea_top.png')
 local sea_bottom = love.graphics.newImage('graphics/sea_bottom.png')
 
-function PlayState:init()
+function PlayState:enter(params)
+    -- self.player1.x = params.playerX
+    -- self.player1.y = params.playerY
     ui = UI()
-    player1 = Player(50, 100)
-    torpedo = Torpedo(120, 139)
+    player1 = Player(params.playerX, params.playerY)
+    torpedo = Torpedo(params.playerX + 70, params.playerY + 39)
     bismarck = Bismarck(1050, VIRTUAL_HEIGHT - 375)
     ocean = Ocean()
     score = 0
@@ -85,7 +87,6 @@ function PlayState:update(dt)
 
         for key, arado in pairs(arados) do
             if arado.remove then
-                print("removing arado")
                 table.remove(arados, key)
             end
         end

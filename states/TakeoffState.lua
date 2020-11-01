@@ -27,7 +27,7 @@ function TakeoffState:update(dt)
     bottomSeaScroll = (bottomSeaScroll + 30 * dt) 
         % GROUND_LOOPING_POINT
 
-    ui:setSpeed(player1.dx)
+    ui:setSpeed(math.ceil(player1.dx))
 
     if isScrolling then
         player1:update(dt)
@@ -38,6 +38,14 @@ function TakeoffState:update(dt)
     if player1.x > player1.width + 400 then
         arkRoyal.move = true
         arkRoyal.dx = player1.dx
+    end
+
+    if arkRoyal.x < -3000 then
+        -- print("Transition to next scene")
+        gStateMachine:change('play', {
+            playerX = player1.x,
+            playerY = player1.y
+        })
     end
 end
 

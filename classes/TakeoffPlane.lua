@@ -57,12 +57,6 @@ function TakeoffPlane:update(dt)
         end
     end
 
-    -- if self.dy < 35 then
-    --     self.y = math.max(35, self.y + self.dy * dt)
-    -- else
-    --     self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
-    -- end
-
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
     else
