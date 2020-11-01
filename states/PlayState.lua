@@ -36,6 +36,10 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
+    if bismarck.isSunk then
+        gStateMachine:change('win', {score = score})
+    end
+
     if love.keyboard.wasPressed('escape') then
         gStateMachine:change('title')
     end
@@ -109,13 +113,13 @@ function PlayState:update(dt)
             
         end
 
-        -- if torpedo and torpedo:collides(bismarck) then
-        --     sounds['explosion']:stop()
-        --     sounds['explosion']:play()
-        --     bismarck.isSinking = true
-        --     bismarck.speed = 0.025
-        --     torpedo = null
-        -- end
+        if player1.torpedo and player1.torpedo:collides(bismarck) then
+            sounds['explosion']:stop()
+            sounds['explosion']:play()
+            bismarck.isSinking = true
+            bismarck.speed = 0.025
+            player1.torpedo = null
+        end
 
         for key, bullet in pairs(bullets) do
             if bullet.remove then

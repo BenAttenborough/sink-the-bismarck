@@ -11,6 +11,7 @@ function Bismarck:init(x,y)
     self.width = self.graphic:getWidth()
     self.height = self.graphic:getHeight()
     self.isSinking = false
+    self.isSunk = false
 end
 
 function Bismarck:update(dt)
@@ -35,6 +36,9 @@ end
 function Bismarck:sink(dt)
     self.dy = self.dy + self.sinkingSpeed * dt
     self.y = self.y + self.dy
+    if self.y > VIRTUAL_HEIGHT then
+        self.isSunk = true
+    end
 end
 
 function Bismarck:render()

@@ -8,6 +8,7 @@ require 'states/TitleState'
 require 'states/TakeoffState'
 require 'states/PlayState'
 require 'states/GameoverState'
+require 'states/WinState'
 
 WINDOW_WIDTH = 1024
 WINDOW_HEIGHT = 576
@@ -68,7 +69,8 @@ function love.load()
         ['title'] = function() return TitleState() end,
         ['takeoff'] = function() return TakeoffState() end,
         ['play'] = function() return PlayState() end,
-        ['gameover'] = function() return GameoverState() end
+        ['gameover'] = function() return GameoverState() end,
+        ['win'] = function() return WinState() end
     }
     gStateMachine:change('title')
 

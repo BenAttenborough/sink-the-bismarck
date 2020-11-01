@@ -7,7 +7,7 @@ function UI:init()
     self.height = 35
     self.score = 0
     self.altitude = 0
-    self.speed = 'foo'
+    self.speed = 200
 end
 
 function UI:update(dt)
