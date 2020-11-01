@@ -20,6 +20,9 @@ function TakeoffPlane:init(x,y)
     self.planeFrame = 1
     self.playerTimer = Timer.new()
     self.state = 'takeoff'
+    self.rotation = -10
+    self.rotationOriginX = 115
+    self.rotationOriginY = 52
 end
 
 function TakeoffPlane:spinProp()
@@ -43,6 +46,12 @@ function TakeoffPlane:update(dt)
         self.dx = -self.speedX
     elseif love.keyboard.wasHeld('right') then
         self.dx = self.speedX
+    end
+
+    if love.keyboard.wasHeld('up') then
+        self.rotation = self.rotation + 1
+    elseif love.keyboard.wasHeld('down') then
+        self.rotation = self.rotation - 1 
     end
 
     if self.dy < 35 then
@@ -69,5 +78,8 @@ function TakeoffPlane:collides(obstacle)
 end
 
 function TakeoffPlane:render()
-    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y)
+    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y, math.rad(self.rotation), 1, 1, self.rotationOriginX, self.rotationOriginY)
+    -- love.graphics.setColor( 150/255, 0, 0, 1 )
+    -- love.graphics.rectangle( 'fill',  self.x, self.y, 2, 2 )
+    -- love.graphics.setColor(1, 1, 1)
 end

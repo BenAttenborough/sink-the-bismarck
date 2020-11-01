@@ -23,8 +23,8 @@ function TitleState:update(dt)
     bismarck:updateIntro(dt)
     
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play')
-        -- gStateMachine:change('takeoff')
+        -- gStateMachine:change('play')
+        gStateMachine:change('takeoff')
     end
 end
 
