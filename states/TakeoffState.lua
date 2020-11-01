@@ -13,6 +13,8 @@ function TakeoffState:init()
     ui = UI()
     player1 = TakeoffPlane(50, 420)
     arkRoyal = ArkRoyal()
+    player1:spinProp()
+    player1:moveToHorizontal()
 end
 
 function TakeoffState:update(dt)

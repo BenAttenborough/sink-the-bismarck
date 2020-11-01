@@ -77,6 +77,20 @@ function TakeoffPlane:collides(obstacle)
     return false
 end
 
+function TakeoffPlane:spinProp()
+    self.playerTimer:every(0.1, function() 
+        if self.planeFrame == 4 then 
+            self.planeFrame = 1 
+        else 
+            self.planeFrame = self.planeFrame + 1 
+        end
+    end)
+end
+
+function TakeoffPlane:moveToHorizontal()
+    self.playerTimer:tween(2, self, {rotation = 0})
+end
+
 function TakeoffPlane:render()
     love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y, math.rad(self.rotation), 1, 1, self.rotationOriginX, self.rotationOriginY)
     -- love.graphics.setColor( 150/255, 0, 0, 1 )
