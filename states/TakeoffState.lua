@@ -11,7 +11,7 @@ local sea_bottom = love.graphics.newImage('graphics/sea_bottom.png')
 
 function TakeoffState:init()
     ui = UI()
-    player1 = TakeoffPlane(50, 420)
+    player1 = TakeoffPlane(300, 435)
     arkRoyal = ArkRoyal()
     player1:spinProp()
 end
@@ -31,15 +31,20 @@ function TakeoffState:update(dt)
 
     if isScrolling then
         player1:update(dt)
+        arkRoyal:update(dt)
         ui:setAltitude(500 - math.ceil(player1.y))
+    end
+
+    if player1.x > player1.width + 400 then
+        arkRoyal.move = true
+        arkRoyal.dx = player1.dx
     end
 end
 
 function TakeoffState:render()
     love.graphics.draw(sea_top, -topSeaScroll, VIRTUAL_HEIGHT - 49)
-    player1:render()
     arkRoyal:render()
-  
+    player1:render()
     ui:render()
 
     love.graphics.draw(sea_bottom, -bottomSeaScroll, VIRTUAL_HEIGHT - 40)

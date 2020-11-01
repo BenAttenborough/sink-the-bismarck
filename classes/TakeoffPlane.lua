@@ -20,7 +20,7 @@ function TakeoffPlane:init(x,y)
     self.planeFrame = 1
     self.playerTimer = Timer.new()
     self.state = 'takeoff'
-    self.rotation = -10
+    self.rotation = -12
     self.rotationOriginX = 115
     self.rotationOriginY = 52
     self.grounded = true
@@ -63,7 +63,7 @@ function TakeoffPlane:update(dt)
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
     else
-        self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+        self.x = math.min(VIRTUAL_WIDTH - self.width - 300, self.x + self.dx * dt)
     end
 
     if self.dx > 150 and self.grounded then
