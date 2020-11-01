@@ -96,7 +96,4 @@ end
 
 function TakeoffPlane:render()
     love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y, math.rad(self.rotation), 1, 1, self.rotationOriginX, self.rotationOriginY)
-    -- love.graphics.setColor( 150/255, 0, 0, 1 )
-    -- love.graphics.rectangle( 'fill',  self.x, self.y, 2, 2 )
-    -- love.graphics.setColor(1, 1, 1)
 end

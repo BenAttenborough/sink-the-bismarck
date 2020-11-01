@@ -14,8 +14,6 @@ function Torpedo:init(x,y)
     self.width = TORPEDO_GRAPHIC:getWidth()
     self.isDropped = false
     self.isInAir = true
-    self.rotationOriginX = 115
-    self.rotationOriginY = 52
 end
 
 function Torpedo:update(dt)
@@ -81,8 +79,8 @@ end
 
 function Torpedo:render()
     if self.isInAir then
-        love.graphics.draw(TORPEDO_GRAPHIC, self.x, self.y, 0, 1, 1, self.rotationOriginX, self.rotationOriginY)
+        love.graphics.draw(TORPEDO_GRAPHIC, self.x, self.y)
     else
-        love.graphics.draw(SPRAY_GRAPHIC, self.x, self.y, 0, 1, 1, self.rotationOriginX, self.rotationOriginY)
+        love.graphics.draw(SPRAY_GRAPHIC, self.x, self.y)
     end
 end

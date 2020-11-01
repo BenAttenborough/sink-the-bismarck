@@ -20,8 +20,6 @@ function Player:init(x,y)
     self.bulletTimer = 0
     self.planeFrame = 1
     self.playerTimer = Timer.new()
-    self.rotationOriginX = 115
-    self.rotationOriginY = 52
 end
 
 function Player:spinProp()
@@ -93,5 +91,5 @@ function Player:collides(obstacle)
 end
 
 function Player:render()
-    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y, 0, 1, 1, self.rotationOriginX, self.rotationOriginY)
+    love.graphics.draw(planeAtlas, planeFrames[self.planeFrame], self.x, self.y)
 end

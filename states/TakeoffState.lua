@@ -14,6 +14,8 @@ function TakeoffState:init()
     player1 = TakeoffPlane(300, 435)
     arkRoyal = ArkRoyal()
     player1:spinProp()
+    topSeaScrollSpeed = 20
+    bottomSeaScrollSpeed = 30
 end
 
 function TakeoffState:update(dt)
@@ -21,10 +23,10 @@ function TakeoffState:update(dt)
         gStateMachine:change('title')
     end
 
-    topSeaScroll = (topSeaScroll + 20 * dt) 
+    topSeaScroll = (topSeaScroll + topSeaScrollSpeed * dt) 
         % GROUND_LOOPING_POINT
     
-    bottomSeaScroll = (bottomSeaScroll + 30 * dt) 
+    bottomSeaScroll = (bottomSeaScroll + bottomSeaScrollSpeed * dt) 
         % GROUND_LOOPING_POINT
 
     ui:setSpeed(math.ceil(player1.dx))
@@ -43,8 +45,8 @@ function TakeoffState:update(dt)
     if arkRoyal.x < -3000 then
         -- print("Transition to next scene")
         gStateMachine:change('play', {
-            playerX = player1.x,
-            playerY = player1.y
+            playerX = player1.x - player1.rotationOriginX,
+            playerY = player1.y - player1.rotationOriginY
         })
     end
 end
