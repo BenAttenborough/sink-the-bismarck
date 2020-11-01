@@ -24,6 +24,7 @@ function TakeoffPlane:init(x,y)
     self.rotationOriginX = 115
     self.rotationOriginY = 52
     self.grounded = true
+    self.canLiftOff = false
 end
 
 function TakeoffPlane:spinProp()
@@ -48,17 +49,19 @@ function TakeoffPlane:update(dt)
         self.dx = math.min(self.dx + (self.speedX * dt), 200)
     end
 
-    if love.keyboard.wasHeld('up') then
-        -- self.rotation = self.rotation + 1
-    elseif love.keyboard.wasHeld('down') then
-        -- self.rotation = self.rotation - 1 
+    if self.canLiftOff then
+        if love.keyboard.wasHeld('up') then
+            self.y = math.max(35, self.y - (50 * dt))
+        elseif love.keyboard.wasHeld('down') then
+            self.y = math.min(VIRTUAL_HEIGHT - self.height - 83, self.y + (50 * dt))
+        end
     end
 
-    if self.dy < 35 then
-        self.y = math.max(35, self.y + self.dy * dt)
-    else
-        self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
-    end
+    -- if self.dy < 35 then
+    --     self.y = math.max(35, self.y + self.dy * dt)
+    -- else
+    --     self.y = math.min(VIRTUAL_HEIGHT - self.height - 50, self.y + self.dy * dt)
+    -- end
 
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
@@ -94,6 +97,7 @@ end
 
 function TakeoffPlane:moveToHorizontal()
     self.playerTimer:tween(2, self, {rotation = 0})
+    self.playerTimer:after(4, function() self.canLiftOff = true end)
 end
 
 function TakeoffPlane:render()
