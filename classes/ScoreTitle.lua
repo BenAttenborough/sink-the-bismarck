@@ -17,12 +17,16 @@ function ScoreTitle:render()
     love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.setFont(gPlayFont)
     y = self.y + 100
-    love.graphics.printf('You killed the following pilots', self.x, y, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('You killed the following pilots:', self.x, y, VIRTUAL_WIDTH, 'center')
     y = y + 60
     for i=1,10 do
         love.graphics.printf(self.names[i], self.x, y, VIRTUAL_WIDTH, 'center')
         y = y + 30
     end
+    y = y + 60
+    love.graphics.printf("...and 2,106 sailors onboard the Bismarck", self.x, y, VIRTUAL_WIDTH, 'center')
+    y = y + 30
+    love.graphics.printf("115 survived.", self.x, y, VIRTUAL_WIDTH, 'center')
 end
 
 function getFirstNames()
@@ -74,7 +78,6 @@ function getNames(enemiesDowned)
             first = firstNames[math.random(#firstNames)]
             second = secondNames[math.random(#secondNames)]
             name = first .. " " .. second .. ", " .. math.random(18, 38)
-            print(name)
             table.insert(names, name)
         end
     end
