@@ -72,7 +72,7 @@ function love.load()
         ['gameover'] = function() return GameoverState() end,
         ['win'] = function() return WinState() end
     }
-    gStateMachine:change('title')
+    gStateMachine:change('title', {score = 5})
 
     love.keyboard.keysPressed = {}
     love.keyboard.keysHeld = {}

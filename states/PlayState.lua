@@ -31,13 +31,14 @@ function PlayState:enter(params)
     arados = {}
     lastAradoY = 0
     enemiesSpawned = 0
+    enemiesDowned = 0
     player1:spinProp()
     aradoAdditonalSpeed = 0
 end
 
 function PlayState:update(dt)
     if bismarck.isSunk then
-        gStateMachine:change('win', {score = score})
+        gStateMachine:change('win', {score = score, enemiesDowned = enemiesDowned})
     end
 
     if love.keyboard.wasPressed('escape') then
@@ -84,6 +85,7 @@ function PlayState:update(dt)
 
             if ocean:collides(arado) and arado.isSunk == false then
                 arado:splash()
+                enemiesDowned = enemiesDowned + 1
             end
         end
 
@@ -92,8 +94,6 @@ function PlayState:update(dt)
                 table.remove(arados, key)
             end
         end
-
-        -- if torpedo then torpedo:update(dt) end
 
         player1:update(dt)
 
